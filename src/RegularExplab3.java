@@ -14,7 +14,7 @@ public class RegularExplab3 {
 
 	public static void main(String[] args) {
 		File file = new File(
-				"/home/student/workspace/CompilerLab/src/expression.txt");
+				"expression.txt");
 		int ch;
 		String exp = null;
 		StringBuffer strContent = new StringBuffer("");
@@ -22,7 +22,7 @@ public class RegularExplab3 {
 
 		try {
 			FileInputStream fstream = new FileInputStream(
-					"/home/student/workspace/CompilerLab/src/expression.txt");
+					"expression.txt");
 			String str = null;
 			int test = 1;
 			DataInputStream in = new DataInputStream(fstream);
