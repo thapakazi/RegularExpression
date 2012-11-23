@@ -43,7 +43,7 @@ public class RegularExplab3 {
 							+ " matches with the expression!!!");
 				} else {
 					System.out
-							.println("The string does not matche with the expression!!!");
+							.println("The string does not matches with the expression!!!");
 				}
 
 			}
