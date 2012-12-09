@@ -1,6 +1,6 @@
 /*************Authors:
 milans.thapa78@gmail.com--<Milan Thapa>
-shalilawal@gmail.com--<Shalil Awaley>
+shalil9130@gmail.com--<Shalil Awaley>
  */
 
 #include<stdio.h>
@@ -8,12 +8,14 @@ shalilawal@gmail.com--<Shalil Awaley>
 #include<malloc.h>
 #define SIZE 20
 #define CHUNK_SZ 10
+ //count | symbols
+  int count=0;
 
+//chunking the input
 char **chunking(char *inputStr){
   int i,j;
 
-  //count | symbols
-  int count=0;
+ 
   char * ptr=inputStr;
   while(*ptr!='\0'){
     if(*ptr=='|')
@@ -50,20 +52,57 @@ char **chunking(char *inputStr){
   for(i=0;i<count+1;i++)
     {
       for(j=0;j<CHUNK_SZ;j++)
-	printf("%c\t",str[i][j]);
+	printf("\t%c",str[i][j]);
       printf("\n");
     }
   return str;
 }
 
+//extract substring
+int extractSubStr(char * src_str, char* dest_str,int t_case){
+  int i=0;
+   *dest_str=malloc(CHUNK_SZ*sizeof(char));
+  //case for beta
+  /* if(t_case){
+    *dest_str[i]=*src_str;
+    i++;
+  }
+  
+  //case for alpha
+   while(src_str!='\0'){
+    src_str++;
+    *dest_str[i]=*src_str;
+    i++;
+    }
+  */
+  *dest_str[i]='\0';
+  printf("%s",dest_str);
+   return i;
+}
+
 //check left recursion
 int checkLeftRecursion(char *inputStr){
 
-  //chunk out all the strings first seperated by '|' symbol
-  char ** chunkedStr=chunking(inputStr);
+  int i,j;
   
-}
+  //extract the first character of input Eg. S=>Sab|b , extract S to check it with other chunks
+  char non_terminal=*inputStr;
+  char *ptr=inputStr+3;
 
+  //chunk out all the strings first seperated by '|' symbol
+  char ** chunkedStr=chunking(inputStr+3);
+  
+  char ** t,nt; //t-termanal & nt-non-terminal
+  t=malloc(count*sizeof(char*));
+  nt=malloc(count*sizeof(char*));
+
+  int id_t=0,id_nt=0; // index for t and nt
+  for(i=0,j=0;i<count+1;i++){
+    if(non_terminal==chunkedStr[i][0]){
+      extractSubStr(chunkedStr,&nt[id_nt++],0);
+     }
+  }
+}
 
 //main function
 void main () {
@@ -80,8 +119,7 @@ void main () {
   printf("The grammer must be formated as: abc|xY0z|RAm|haude\n");
   scanf("%s",production);
   non_terminal=production[0];
-  
-  str=chunking(production);
+  str=checkLeftRecursion(production);  
   
 	/*
 	    if(non_terminal==production[index]) {
