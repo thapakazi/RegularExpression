@@ -4,8 +4,10 @@ import java.util.regex.Pattern;
 public class RegularExplab1 {
 
 	public static void main(String argc[]) {
-		String exp1 = "(0|1)*|0*1*";
-		CharSequence testStr = "010101010101010101010";
+//		String exp1 = "(0|1)*|0*1*";
+//		CharSequence testStr = "010101010101010101010";
+		String exp1 = "(1|0)*(101)+(1|0)*(001)*";
+		CharSequence testStr = "0011101101101000101010001";
 
 		// Pattern matching
 		Pattern pattern = Pattern.compile(exp1);

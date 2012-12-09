@@ -1,8 +1,8 @@
 Defined Regular expression:  (0|1)*|0*1*
-The string 010101010101010101010 matches with the expression!!!
+T he string 010101010101010101010 matches with the expression!!!
 
-Defined Regular expression:  (a*b*|(def)+|a*d+e)+
+De fined Regular expression:  (a*b*|(def)+|a*d+e)+
 The string aaabbdefdefaaaaadde matches with the expression!!!
 
 Defined Regular expression:  ((a|b)*(c|d)*)+|ab*c*
-The string abaaaaaab matches with the expression!!!
+The  string abaaaaaab matches with the expression!!!
