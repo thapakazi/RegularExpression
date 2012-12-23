@@ -75,9 +75,9 @@ int checkLeftRecursion(char *inputStr){
     
     if(non_terminal== *ptr)
       {
-	printf("found the left recursion at i = %c\n",*ptr);
+	//	printf("found the left recursion at i = %c\n",*ptr);
 	nt[id_nt]=malloc(CHUNK_SZ*sizeof(char));
-	printf("found the left recursion at i = %d\n",i);
+	//printf("found the left recursion at i = %d\n",i);
 	int j = 0;
 	ptr +=1;
 	while(*ptr!='\0'){
@@ -94,7 +94,7 @@ int checkLeftRecursion(char *inputStr){
       }
     
     else{
-      printf("found beta terms for i = %d",i);
+      //printf("found beta terms for i = %d",i);
       t[id_t]=malloc(CHUNK_SZ*sizeof (char));
       int j = 0;
       while(*ptr!='\0'){
