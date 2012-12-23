@@ -1,17 +1,18 @@
 /*************Authors:
 milans.thapa78@gmail.com--<Milan Thapa>
 shalil9130@gmail.com--<Shalil Awaley>
- */
+*/
 
 #include<stdio.h>
 #include<string.h>
 #include<malloc.h>
 #define SIZE 20
 #define CHUNK_SZ 10
- //count | symbols
-  int count=0;
 
-//chunking the input
+//count '|' symbols
+int count=0;
+
+//chunking the input into jagged array
 char **chunking(char *inputStr){
   int i,j;
 
@@ -24,7 +25,6 @@ char **chunking(char *inputStr){
   }
 
   //  printf("Number of pipes '|' counted :%d\n",count);
-
   //create string array--jagged--2D
   char ** str= malloc(count*sizeof(char*));
   ptr= inputStr;
@@ -32,21 +32,18 @@ char **chunking(char *inputStr){
   for(i=0;i<count+1;i++){
     str[i]=malloc(CHUNK_SZ*sizeof(char));
     j=0;
-    //for(j=0;j<CHUNK_SZ;j++){
     while(*ptr!='|'&&*ptr!='\0')
       {
 	str[i][j]=*ptr;
+	
 	//	printf("j:%d %c\n",j,*ptr);
 	ptr++;
 	j++;
-	
       }
+    str[i][j]='\0';
     ptr++;
     //    printf("i:%d %c\n",i,*ptr);
-    
   }
-  
- 
   //print the chunks in the array created
   printf("\n***So after chunking the input, we get\n");
   for(i=0;i<count+1;i++)
@@ -58,50 +55,75 @@ char **chunking(char *inputStr){
   return str;
 }
 
-//extract substring
-int extractSubStr(char * src_str, char* dest_str,int t_case){
-  int i=0;
-   *dest_str=malloc(CHUNK_SZ*sizeof(char));
-  //case for beta
-  /* if(t_case){
-    *dest_str[i]=*src_str;
-    i++;
-  }
-  
-  //case for alpha
-   while(src_str!='\0'){
-    src_str++;
-    *dest_str[i]=*src_str;
-    i++;
-    }
-  */
-  *dest_str[i]='\0';
-  printf("%s",dest_str);
-   return i;
-}
-
-//check left recursion
+//check left recursion and adjust the string as required.
 int checkLeftRecursion(char *inputStr){
 
   int i,j;
-  
+  char *ptr=inputStr+3;
   //extract the first character of input Eg. S=>Sab|b , extract S to check it with other chunks
   char non_terminal=*inputStr;
-  char *ptr=inputStr+3;
-
   //chunk out all the strings first seperated by '|' symbol
   char ** chunkedStr=chunking(inputStr+3);
   
-  char ** t,nt; //t-termanal & nt-non-terminal
-  t=malloc(count*sizeof(char*));
-  nt=malloc(count*sizeof(char*));
-
+  char** t=malloc(count*sizeof(char*));
+  char** nt=malloc(count*sizeof(char*));
+  
   int id_t=0,id_nt=0; // index for t and nt
   for(i=0,j=0;i<count+1;i++){
-    if(non_terminal==chunkedStr[i][0]){
-      extractSubStr(chunkedStr,&nt[id_nt++],0);
-     }
+    ptr=&chunkedStr[i][0];
+
+    
+    if(non_terminal== *ptr)
+      {
+	printf("found the left recursion at i = %c\n",*ptr);
+	nt[id_nt]=malloc(CHUNK_SZ*sizeof(char));
+	printf("found the left recursion at i = %d\n",i);
+	int j = 0;
+	ptr +=1;
+	while(*ptr!='\0'){
+	  nt[id_nt][j]=*ptr;
+	  j++;
+	  ptr++;
+	}
+	//t[id_t][j]=non_terminal;
+	//	t[id_t][j+1]='\'';
+	nt[id_nt][j+1]='\0';
+	id_nt++;
+      
+	//extractSubStr(chunkedStr,&nt,0);
+      }
+    
+    else{
+      printf("found beta terms for i = %d",i);
+      t[id_t]=malloc(CHUNK_SZ*sizeof (char));
+      int j = 0;
+      while(*ptr!='\0'){
+	t[id_t][j]=*ptr;
+	j++;
+	ptr++;
+      }
+      id_t++;
+      
+    }
   }
+  //print the terms
+  printf("\nThe required expression is:\n");
+  //print the beta terms
+  printf("%c=> ",non_terminal);
+  for(i=0;i<id_t;i++){
+    printf("%s%c'",t[i],non_terminal);
+    if ( i+1 != id_t) printf("|");
+    
+  }
+
+  //print the alpha terms
+  printf("\n%c'=> ",non_terminal);
+  for(i=0;i<id_nt;i++){
+    printf("%s%c'",nt[i],non_terminal);
+    printf("|"); 
+  }
+  printf("E");
+  
 }
 
 //main function
@@ -111,36 +133,11 @@ void main () {
   char non_terminal;
   char beta,alpha;                        
   char production[SIZE];
-  
-  int index=3; /* starting of the string following "->" */
-
 	
   printf("Enter the grammer:<length limit 20>\n");
-  printf("The grammer must be formated as: abc|xY0z|RAm|haude\n");
+  printf("The grammer must be formated as: S=>Sabc|x0z|Sega|hello|world\n");
   scanf("%s",production);
   non_terminal=production[0];
   str=checkLeftRecursion(production);  
-  
-	/*
-	    if(non_terminal==production[index]) {
-		alpha=production[index+1];
-		printf("Grammar is left recursive.\n");
-	
-		while(production[index]!=0 && production[index]!='|')
-		index++;
-	
-		if(production[index]!=0) {
-			beta=production[index+1];
-			printf("Grammar without left recursion:\n");
-			printf("%c->%c%c\'",non_terminal,beta,non_terminal);
-			printf("\n%c\'->%c%c\'|E\n",non_terminal,alpha,non_terminal);
-		}
-		else 
-			printf("Grammar can't be reduced\n");
-	    }
-	    else {
-		printf("Grammar is not left recursive.\n");
-	    }
-	*/
-	  
-	}
+    
+}
