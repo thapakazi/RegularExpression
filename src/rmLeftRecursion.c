@@ -138,6 +138,11 @@ void main () {
   printf("The grammer must be formated as: S=>Sabc|x0z|Sega|hello|world\n");
   scanf("%s",production);
   non_terminal=production[0];
-  str=checkLeftRecursion(production);  
-    
+  if(non_terminal==production[3])
+    { 
+      printf("\nleft recusion exists...\n");
+      str=checkLeftRecursion(production);  
+    }
+  else
+    printf("Expression provided is not left recursive...");
 }

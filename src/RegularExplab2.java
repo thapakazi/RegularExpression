@@ -40,7 +40,7 @@ public class RegularExplab2
     	
     	// opening file the user entered as the argument 
     	try{
-    		input = new Scanner( new File( "./src/RegularExplab2.java" )); 
+    		input = new Scanner( new File( "./RegularExplab2.java" )); 
     	} catch (FileNotFoundException fileNotFoundException) {
     		System.err.println("Error opening file");
     		System.exit(0);
